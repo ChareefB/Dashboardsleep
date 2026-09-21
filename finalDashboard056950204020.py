@@ -31,7 +31,9 @@ def load_and_process_data():
 
     def calculate_sleep(row):
         bed = datetime.strptime(str(row["เวลาเข้านอน"]).strip(), "%H:%M")
-        wake = datetime.strptime(str(row["เวลาตื่นนอน"]).strip(), "%H:%M")
+        # ใช้ row.get() เพื่อรองรับทั้งชื่อ 'เวลาตื่น' และ 'เวลาตื่นนอน'
+        wake_str = str(row.get("เวลาตื่นนอน", row.get("เวลาตื่น", ""))).strip()
+        wake = datetime.strptime(wake_str, "%H:%M")
         if wake <= bed:
             wake += timedelta(days=1)
 
@@ -171,18 +173,19 @@ with chart_col2:
 # --- 4. ตารางรายละเอียดการนอนหลับรายบุคคล ---
 st.subheader("📋 รายละเอียดการนอนหลับรายบุคคล (`sleep_output.csv`)")
 
-# จัดรูปแบบตารางแสดงผล
+# ค้นหาคอลัมน์เวลาตื่นที่มีอยู่จริงใน DataFrame
+wake_col = "เวลาตื่นนอน" if "เวลาตื่นนอน" in df.columns else "เวลาตื่น"
+
 display_df = df[
     [
         "ชื่อ",
         "เวลาเข้านอน",
-        "เวลาตื่นนอน",
+        wake_col,
         "ระยะเวลานอน",
         "จำนวนรอบวงจรการนอน",
         "สถานะ",
     ]
 ].copy()
-
 st.dataframe(
     display_df.style.map(
         lambda val: (
