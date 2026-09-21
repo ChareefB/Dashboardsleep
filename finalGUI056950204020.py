@@ -42,7 +42,7 @@ def save_to_csv():
         with open(filename, mode="w", newline="", encoding="utf-8-sig") as file:
             writer = csv.writer(file)
             # เขียน Header 3 คอลัมน์
-            writer.writerow(["ชื่อ", "เวลาเข้านอน", "เวลาตื่นนอน"])
+            writer.writerow(["ชื่อ", "เวลาเข้านอน", "เวลาตื่น"])
             # เขียนข้อมูล
             writer.writerows(data)
 
@@ -76,7 +76,7 @@ frame_inputs = ttk.LabelFrame(
 frame_inputs.pack(fill="both", expand=True, padx=10, pady=5)
 
 # สร้าง Header สำหรับตาราง
-headers = ["รายการที่", "ชื่อ", "เวลาเข้านอน", "เวลาตื่นนอน"]
+headers = ["รายการที่", "ชื่อ", "เวลาเข้านอน", "เวลาตื่น"]
 for col_idx, header in enumerate(headers):
     ttk.Label(frame_inputs, text=header, font=("Tahoma", 9, "bold")).grid(
         row=0, column=col_idx, padx=5, pady=5, sticky="w"
