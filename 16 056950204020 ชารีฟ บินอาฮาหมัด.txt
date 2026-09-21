@@ -1,0 +1,6 @@
+เลขที่ 16 ชารีฟ บินอาฮาหมัด 056950204020-1
+streamlit
+pandas
+plotly
+matplotlib
+numpy
